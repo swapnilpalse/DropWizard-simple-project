@@ -19,10 +19,10 @@ public class HelloWorldResources {
     private final String defaultName;
     private final AtomicLong counter;
 
-    public HelloWorldResources(String template, String defaultName, AtomicLong counter) {
+    public HelloWorldResources(String template, String defaultName) {
         this.template = template;
         this.defaultName = defaultName;
-        this.counter = counter;
+        this.counter = new AtomicLong();
     }
 
     @GET

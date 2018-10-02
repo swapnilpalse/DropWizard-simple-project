@@ -1,5 +1,7 @@
 package com.dropwizard.learning.hellowrold;
 
+import com.dropwizard.learning.hellowrold.health.TemplateHealthCheck;
+import com.dropwizard.learning.hellowrold.resources.HelloWorldResources;
 import io.dropwizard.Application;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
@@ -22,7 +24,14 @@ public class HelloWorldApplication extends Application<HelloWorldConfiguration> 
     @Override
     public void run(HelloWorldConfiguration configuration,
             Environment environment) {
+        final HelloWorldResources resource = new HelloWorldResources( configuration.getTemplate(),
+                configuration.getDefaultName());
+        environment.jersey().register(resource);
+        final TemplateHealthCheck healthCheck =
+                new TemplateHealthCheck(configuration.getTemplate());
+        environment.healthChecks().register("template", healthCheck);
+        environment.jersey().register(resource);
+
     }
-        // nothing to do yet
 
 }
